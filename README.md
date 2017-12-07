@@ -20,9 +20,11 @@ search('dogs', 100)
 search('cats', 200)
 // only the 'cats' search will resolve as it was appended _after_ the 'dogs' search
 
+// `resolved` will return the last promise
 race.resolved().then(() => {
+  // a new race
   search('ferret', 100)
   search('gerbil', 200)
-  // only the 'gerbil' search will resolve as it was appended _after_ the 'dogs' search
+  // only the 'gerbil' search will resolve as it was appended _after_ the 'ferret' search
 })
 ```
