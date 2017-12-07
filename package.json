@@ -2,9 +2,25 @@
   "name": "promise-race",
   "version": "1.0.0",
   "description": "An ES6 class to manage Promise race conditions. Will resolve to the first resolved Promise",
-  "main": "index.js",
+  "module": "index.js",
   "repository": "https://github.com/Skwai/promise-race",
   "author": "Cameron <me@skwai.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "scripts": {
+    "lint": "eslint index.js",
+    "unit": "mocha ./test/**.js --compilers js:babel-register"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.1.2",
+    "eslint": "^4.12.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^4.0.1"
+  }
 }
