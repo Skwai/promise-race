@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <script type="module">
+  import PromiseRace from '../index.js'
+
+  const race = new PromiseRace()
+  const search = (query) => {
+    race.append(fetch(`https://example.com/?q=${query}`, { mode: 'no-cors' }))
+      .then((response) => console.log(`${query} response from example.com`, response))
+  }
+  search('dogs', 100)
+  search('cats', 200)
+  // only the 'cats' search will resolve as it was appended _after_ the 'dogs' search
+
+  race.resolved().then(() => {
+    search('ferret', 100)
+    search('gerbil', 200)
+    // only the 'gerbil' search will resolve as it was appended _after_ the 'dogs' search
+  })
+  </script>
+</body>
+</html>

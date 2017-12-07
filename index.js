@@ -6,10 +6,7 @@ export default class PromiseRace {
    * Create a PromiseRace
    */
   constructor () {
-    Object.assign(this, {
-      last: null,
-      lastID: null
-    })
+    this.reset()
   }
 
   /**
@@ -31,6 +28,16 @@ export default class PromiseRace {
   }
 
   /**
+   * Reset the race
+   */
+  reset () {
+    Object.assign(this, {
+      last: null,
+      lastID: null
+    })
+  }
+
+  /**
    * Add a promise to the race
    * @param {Promise} promise
    * @return {Promise}
@@ -43,10 +50,16 @@ export default class PromiseRace {
     const intercepted = new Promise((resolve, reject) => {
       promise
         .then((result) => {
-          if (this.isLastID(id)) resolve(result)
+          if (this.isLastID(id)) {
+            this.reset()
+            resolve(result)
+          }
         })
         .catch((err) => {
-          if (this.isLastID(id)) reject(err)
+          if (this.isLastID(id)) {
+            this.reset()
+            reject(err)
+          }
         })
     })
     this.last = intercepted

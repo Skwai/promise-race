@@ -1,6 +1,6 @@
-# PromiseRace
+# promise-race
 
-An ES6 class to help with Promise races. This is useful when you want to ignore redundant promises that are overriden by a promise called afterwards
+An ES6 class to help with Promise races. This is useful when you want to ignore previous promises that are overriden by a more recently called promise
 
 ## Install
 ```
@@ -12,23 +12,17 @@ $ npm install -S promise-race
 import PromiseRace from 'promise-race'
 
 const race = new PromiseRace()
+const search = (query) => {
+  return race.append(fetch(`https://example.com/?q=${query}`, { mode: 'no-cors' }))
+    .then((response) => console.log(`${query} response from example.com`, response))
+}
+search('dogs', 100)
+search('cats', 200)
+// only the 'cats' search will resolve as it was appended _after_ the 'dogs' search
 
-const p1 = new Promise(resolve => setTimeout(resolve(1), 250))
-const p2 = new Promise(resolve => setTimeout(resolve(2), 500))
-
-let foo
-
-// `p1` promise WON'T resolve as `p2` was appended later
-race.append(p1).then(() => { foo = 1 })
-
-// this promise WILL resolve as it was appended after `p1`
-race.append(p2).then(() => { foo = 2 })
-
-console.log(foo) // 2
-
-// This will return a promise that resolves with the last appended promise
-promise.resolved()
-  .then(() => {
-    // ...
-  })
+race.resolved().then(() => {
+  search('ferret', 100)
+  search('gerbil', 200)
+  // only the 'gerbil' search will resolve as it was appended _after_ the 'dogs' search
+})
 ```
