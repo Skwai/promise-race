@@ -1,0 +1,10 @@
+{
+  "name": "promise-race",
+  "version": "1.0.0",
+  "description": "An ES6 class to manage Promise race conditions. Will resolve to the first resolved Promise",
+  "main": "index.js",
+  "repository": "https://github.com/Skwai/promise-race",
+  "author": "Cameron <me@skwai.com>",
+  "license": "MIT",
+  "private": false
+}
